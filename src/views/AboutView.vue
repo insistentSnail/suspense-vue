@@ -4,24 +4,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   async setup() {
     await new Promise((resolve) => {
       setTimeout(() => {
-        resolve();
+        resolve("success");
       }, 2000);
     });
   },
 };
 </script>
-
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>

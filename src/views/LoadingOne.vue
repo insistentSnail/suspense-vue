@@ -1,23 +1,27 @@
 <template>
   <div class="loadingOneTitle">{{ data }}</div>
-  <Suspense>
+  <SuspenseWithError>
     <template #default>
-      <A></A>
+      <MyAsyncComponent :timeout="1000" />
     </template>
     <template #fallback>
-      <div>loading</div>
+      <h1>Loading... Please wait 1s.</h1>
     </template>
-  </Suspense>
+    <template #error>
+      <h1>I failed to load</h1>
+    </template>
+  </SuspenseWithError>
 </template>
 
 <script setup lang="ts">
-import { ref, defineAsyncComponent } from "vue";
-const A = defineAsyncComponent(() => import("@/components/Loading1.vue"));
+import { ref } from "vue";
+import SuspenseWithError from "@/components/SuspenseWithError.vue";
+import MyAsyncComponent from "@/components/MyAsyncComponent.vue";
 const data = ref<string>("");
 const result = await new Promise((resolve) => {
   setTimeout(() => {
     resolve("刘鑫");
-  }, 3000);
+  }, 1000);
 });
 data.value = result as string;
 </script>
@@ -26,8 +30,5 @@ data.value = result as string;
 .loadingOneTitle {
   font-size: 30px;
   color: #f00;
-  &:hover {
-    color: #0f0;
-  }
 }
 </style>
